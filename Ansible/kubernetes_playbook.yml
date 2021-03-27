@@ -1,0 +1,9 @@
+---
+- name: Kubernetes Cluster
+  become: yes
+
+  hosts: etcd
+  tasks:
+    - name: Configure ETCD Cluster
+      import_role: 
+        name: ETCD_Cluster

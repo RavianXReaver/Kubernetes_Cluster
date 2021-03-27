@@ -1,0 +1,14 @@
+[etcd]
+192.168.100.10
+192.168.100.11
+192.168.100.12
+
+[etcd:vars]
+ansible_user=vagrant
+
+[kube_master]
+192.168.100.13
+192.168.100.14
+
+[kube_master:vars]
+ansible_user=vagrant
