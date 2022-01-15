@@ -1,0 +1,10 @@
+---
+- name: ETCD Cluster Certificate Configuration
+  become: yes
+  hosts: localhost
+  gather_facts: true
+
+  tasks:
+    - name: Configure SSL certificates for ETCD Cluster
+      import_role: 
+        name: etcd_cluster_certificate

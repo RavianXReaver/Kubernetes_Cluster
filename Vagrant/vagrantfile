@@ -1,55 +1,55 @@
 servers=[
+  # {
+  #   :hostname => "etcd-node1",
+  #   :ip  => "192.168.100.10",
+  #   :box => "ubuntu/bionic64",
+  #   :ram => 1024,
+  #   :cpu => 1
+  # },
+  # {
+  #   :hostname => "etcd-node2",
+  #   :ip  => "192.168.100.11",
+  #   :box => "ubuntu/bionic64",
+  #   :ram => 1024,
+  #   :cpu => 1
+  # },
+  # {
+  #   :hostname => "etcd-node3",
+  #   :ip  => "192.168.100.12",
+  #   :box => "ubuntu/bionic64",
+  #   :ram => 1024,
+  #   :cpu => 1
+  # },
   {
-    :hostname => "ETCD-Node1",
-    :ip  => "192.168.100.10",
+    :hostname => "kube-master1",
+    :ip  => "192.168.56.13",
     :box => "ubuntu/bionic64",
-    :ram => 1024,
-    :cpu => 1
+    :ram => 2048,
+    :cpu => 2
   },
   {
-    :hostname => "ETCD-Node2",
-    :ip  => "192.168.100.11",
+    :hostname => "kube-master2",
+    :ip  => "192.168.56.14",
     :box => "ubuntu/bionic64",
-    :ram => 1024,
-    :cpu => 1
-  },
-  {
-    :hostname => "ETCD-Node3",
-    :ip  => "192.168.100.12",
-    :box => "ubuntu/bionic64",
-    :ram => 1024,
-    :cpu => 1
+    :ram => 2048,
+    :cpu => 2
   }
   # {
-  #   :hostname => "Kube-Master1",
-  #   :ip  => "192.168.100.13",
-  #   :box => "ubuntu/bionic64",
-  #   :ram => 2048,
-  #   :cpu => 2
-  # },
-  # {
-  #   :hostname => "Kube-Master2",
-  #   :ip  => "192.168.100.14",
-  #   :box => "ubuntu/bionic64",
-  #   :ram => 2048,
-  #   :cpu => 2
-  # },
-  # {
-  #   :hostname => "Kube-Worker1",
+  #   :hostname => "kube-worker1",
   #   :ip  => "192.168.100.15",
   #   :box => "ubuntu/bionic64",
   #   :ram => 1024,
   #   :cpu => 1
   # },
   # {
-  #   :hostname => "Kube-Worker2",
+  #   :hostname => "kube-worker2",
   #   :ip  => "192.168.100.16",
   #   :box => "ubuntu/bionic64",
   #   :ram => 1024,
   #   :cpu => 1
   # },
   # {
-  #   :hostname => "Kube-Worker3",
+  #   :hostname => "kube-worker3",
   #   :ip  => "192.168.100.17",
   #   :box => "ubuntu/bionic64",
   #   :ram => 1024,

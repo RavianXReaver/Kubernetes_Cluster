@@ -1,0 +1,4 @@
+#!/bin/bash
+
+/opt/etcd/bin/etcd --config-file /etc/etcd/etcd.conf.yml
+source /etc/environment &

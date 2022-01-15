@@ -1,0 +1,10 @@
+---
+- name: ETCD Cluster Configuration
+  become: yes
+  hosts: etcd
+  gather_facts: true
+
+  tasks:
+    - name: Configure ETCD Cluster
+      import_role: 
+        name: ETCD_Cluster

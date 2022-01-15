@@ -1,0 +1,29 @@
+---
+- name: Install MicroK8s using Snap
+  snap:
+    name: microk8s
+    classic: yes
+    channel: '{{ microk8s_version }}'
+
+- name: 'Add the ansible user: {{ ansible_user }} to the microk8s group'
+  user:
+    name: '{{ ansible_user }}'
+    group: microk8s
+
+- name: Wait for microk8s to be ready
+  command: microk8s status --wait-ready
+  changed_when: false
+  register: mk8sstatusout
+
+- name: Create kubectl alias
+  command: "snap alias microk8s.kubectl kubectl"
+  changed_when: false
+  register: aliaskubectlout
+
+- name: Enable/Disble DNS
+  command: 'microk8s {{ dns_enabled }} dns'
+  changed_when: false
+  register: mk8sdnsout
+
+# - name: Join Master Nodes
+#   command: 'microk8s '

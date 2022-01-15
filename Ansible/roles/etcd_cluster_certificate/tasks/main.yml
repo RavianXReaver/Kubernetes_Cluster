@@ -1,0 +1,8 @@
+---
+
+- name: Get Local IP Address
+  shell: ip -f inet addr show {{ Network_Adapter }} | sed -En -e 's/.*inet ([0-9.]+).*/\1/p'
+  become: yes
+  register: private_ip
+
+- name: 

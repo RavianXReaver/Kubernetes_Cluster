@@ -1,0 +1,97 @@
+---
+- name: Create directory for etcd binaries
+  file: 
+    path: /opt/etcd/bin
+    state: directory
+    owner: root
+    group: root
+    mode: 0700
+
+- name: Download the Tarball into /tmp directory
+  get_url:
+    url: https://storage.googleapis.com/etcd/{{ETCD_Version}}/etcd-{{ETCD_Version}}-linux-amd64.tar.gz
+    dest: /tmp/etcd.tar.gz
+    mode: 0700
+
+- name: Extract the Tarball into etcd binary folder
+  unarchive: 
+    src: /tmp/etcd.tar.gz
+    dest: /opt/etcd/bin
+    mode: 0700
+    extra_opts:
+          - --strip-components=1
+    remote_src: true
+
+- name: Set permissions for etcd 
+  file:
+    path: /opt/etcd/bin/etcd
+    state: file
+    mode: 0700
+
+- name: Set permissions for etcdctl
+  file:
+    path: /opt/etcd/bin/etcdctl
+    state: file
+    mode: 0700
+
+- name: Add /opt/etcd/bin/ to the $PATH environment variable - Permanent
+  become: yes
+  lineinfile:
+    dest: /etc/environment
+    state: present
+    backrefs: yes
+    regexp: PATH=(["]*)((?!.*?{}).*?)(["]*)$
+    line: PATH={{ ansible_env.PATH }}:/opt/etcd/bin
+
+- name: Set the ETCDCTL_API environment variable to the latest
+  become: yes
+  lineinfile:
+    path: /etc/environment
+    line: ETCDCTL_API={{ ETCDCTL_API }}
+    state: present
+    create: True
+    insertafter: EOF
+
+- name: Create the etcd service
+  copy:
+    src: ../files/etcd.service
+    dest: /etc/systemd/system/etcd.service
+    mode: 0644
+
+- name: Create Data directory for ETCD
+  file:
+    path: /var/lib/etcd/{{inventory_hostname}}.etcd
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Create directory for ETCD configuration
+  file: 
+    path: /etc/etcd
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Create configuration file for ETCD
+  template:
+    src: ../templates/etcd.conf.yml.j2
+    dest: /etc/etcd/etcd.conf.yml
+    owner: root
+    group: root
+    mode: 0600
+
+- name: Create startup file
+  copy:
+    src: ../files/startup
+    dest: /etc/etcd/startup
+    owner: root
+    group: root
+    mode: 0700
+
+- name: Enable and start ETCD service
+  service:
+    name: etcd
+    enabled: True
+    state: started
