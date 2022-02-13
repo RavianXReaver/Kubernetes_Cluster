@@ -1,0 +1,21 @@
+---
+- name: Gather Master Node facts
+  hosts: kube_master:kube_worker
+  gather_facts: true
+
+  tasks:
+  - name: assign ansible_play_hosts to varaible
+    set_fact: 
+      master_nodes: "{{ ansible_play_hosts }}"
+
+- name: Kubernetes Worker Cluster
+  become: yes
+  hosts: kube_worker
+  gather_facts: true
+
+  tasks:
+    - name: Configure Worker Node
+      import_role: 
+        name: kubernetes_worker_cluster
+      vars:
+        available_hosts: "{{ master_nodes }}"

@@ -35,7 +35,6 @@
     mode: 0700
 
 - name: Add /opt/etcd/bin/ to the $PATH environment variable - Permanent
-  become: yes
   lineinfile:
     dest: /etc/environment
     state: present
@@ -44,7 +43,6 @@
     line: PATH={{ ansible_env.PATH }}:/opt/etcd/bin
 
 - name: Set the ETCDCTL_API environment variable to the latest
-  become: yes
   lineinfile:
     path: /etc/environment
     line: ETCDCTL_API={{ ETCDCTL_API }}

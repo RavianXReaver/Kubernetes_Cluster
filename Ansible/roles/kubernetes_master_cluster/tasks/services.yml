@@ -1,0 +1,40 @@
+---
+- block:
+  - name: Enable DNS
+    command: 'microk8s {{ dns_enabled }} dns'
+    register: Mk8sDnsOut
+    changed_when: Mk8sDnsOut.stdout_lines is not search("already enabled")
+
+  - name: Enable Metrics Server
+    command: 'microk8s {{ metrics_server }} metrics-server'
+    register: Mk8sMetricsServerOut
+    changed_when: Mk8sMetricsServerOut.stdout_lines is not search("already enabled")
+
+  - name: Enable RBAC
+    command: 'microk8s {{ rbac }} rbac'
+    register: Mk8sRbacOut
+    changed_when: Mk8sRbacOut.stdout_lines is not search("already enabled")
+
+  - name: Enable Storage
+    command: 'microk8s {{ storage }} storage'
+    register: Mk8sStorageOut
+    changed_when: Mk8sStorageOut.stdout_lines is not search("already enabled")
+
+  - name: Enable Helm3
+    command: 'microk8s {{ helm3 }} helm3'
+    register: Mk8sHelm3Out
+    changed_when: Mk8sHelm3Out.stdout_lines is not search("already enabled")
+
+  - name: Enable Dashboard
+    command: 'microk8s {{ dashboard }} dashboard'
+    register: Mk8sDashboardOut
+    changed_when: Mk8sDashboardOut.stdout_lines is not search("already enabled")
+
+  - name: Enable Registry
+    command: 'microk8s {{ registry }} registry'
+    register: Mk8sRegistryOut
+    changed_when: Mk8sRegistryOut.stdout_lines is not search("already enabled")
+  
+  rescue:
+    - name: Start MicroK8s
+      command: microk8s start

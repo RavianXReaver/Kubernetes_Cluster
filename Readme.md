@@ -1,7 +1,10 @@
 Under construction....
 
 
+
 Notes:
 
-scp -r vagrant@192.168.56.13:/home/vagrant/.kube/config ~/.kube/config
+To access remotely connect to the kubectl in master node from localhost use the below command.
+
+scp -r vagrant@[IP_address]:/home/vagrant/.kube/config ~/.kube/config
 Then Change the server address in ~/.kube/config

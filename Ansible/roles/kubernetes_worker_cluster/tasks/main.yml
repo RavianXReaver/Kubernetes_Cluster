@@ -1,0 +1,56 @@
+---
+- name: Install MicroK8s using Snap
+  snap:
+    name: microk8s
+    classic: yes
+    channel: '{{ microk8s_version }}'
+
+- name: 'Add the ansible user: {{ ansible_user }} to the microk8s group'
+  user:
+    name: '{{ ansible_user }}'
+    group: microk8s
+
+- name: Wait for microk8s to be ready
+  command: microk8s status --wait-ready
+  changed_when: false
+  register: mk8sstatusout
+  failed_when: false
+
+- name: Filter out master_nodes variable
+  set_fact: 
+    master_nodes: "{{ master_nodes | select('match', '(master)') | list }}"
+  failed_when: false
+
+- name: Get Status of each Worker Node in HA-Cluster
+  shell: "kubectl get no | grep {{ ansible_hostname }}"
+  delegate_to: "{{ item }}"
+  delegate_facts: true
+  changed_when: false
+  failed_when: false
+  when: item is not search(node_identifier)
+  loop: "{{ master_nodes }}"
+  register: worker_node_status
+
+- name: Filter out worker_node_status variable
+  set_fact: 
+    latest_worker_node_status: "{{ latest_worker_node_status|default([]) }} + [ '{{ item['rc'] }}' ]"
+  when: item["item"] is not search(node_identifier)
+  loop: "{{ worker_node_status['results'] }}"
+
+- name: Assign a random index from worker_node_status variable
+  set_fact: 
+    random_number: "{{ [worker_node_status['results']] | length | random }}"
+
+- name: Get the microk8s join command from the master node
+  shell: "microk8s add-node | grep -E -m1 'microk8s join {{ hostvars[item].ansible_host }}'"
+  delegate_to: "{{ item }}"
+  delegate_facts: true
+  changed_when: false
+  when: (worker_node_status['results'][random_number | int]['stdout'] is not search("Ready")) or (worker_node_status['results'][random_number | int]['stdout'] | length == 0)
+  loop: "{{ master_nodes }}"
+
+  register: microk8s_join_command
+
+- name: Set the microk8s join command on the worker node
+  command: "{{ microk8s_join_command['results'][random_number | int]['stdout'] }} --worker"
+  when: worker_node_status['results'][random_number | int]['stdout'] is not search("Ready")

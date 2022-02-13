@@ -1,3 +1,4 @@
 ansible_user: vagrant
 kubelet_version: 1.22.0-00
 pod_network_cidr: 128.0.0.0/1
+node_list: []

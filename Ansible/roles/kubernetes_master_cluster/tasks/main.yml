@@ -20,10 +20,25 @@
   changed_when: false
   register: aliaskubectlout
 
-- name: Enable/Disble DNS
-  command: 'microk8s {{ dns_enabled }} dns'
-  changed_when: false
-  register: mk8sdnsout
+- name: Run All tasks from Services
+  include_tasks: services.yml
 
-# - name: Join Master Nodes
-#   command: 'microk8s '
+- name: Get the microk8s join command from the microk8s master
+  shell: "microk8s add-node | grep -E -m1 'microk8s join {{ hostvars[item].ansible_host }}'"
+  delegate_to: "{{ item }}"
+  delegate_facts: true
+  changed_when: false
+  loop: "{{ ansible_play_hosts | reject('match', inventory_hostname) | list }}"
+  register: microk8s_join_command
+
+- name: Get Status of each Node
+  shell: "kubectl get no | grep {{ node_identifier }}"
+  register: microk8s_node_status
+  changed_when: false
+  failed_when: false
+
+- name: Set the microk8s join command on the master node
+  command: "{{ microk8s_join_command['results'][microk8s_join_command['results'] | length | random]['stdout'] }}"
+  when:  (microk8s_node_status["stdout_lines"] | length | int + 1 < ansible_play_hosts | length)
+  register: microk8s_node_join
+  changed_when: microk8s_node_join["rc"] != 1

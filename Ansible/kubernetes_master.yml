@@ -1,0 +1,10 @@
+---
+- name: Kubernetes Master Cluster
+  become: yes
+  hosts: kube_master
+  gather_facts: true
+
+  tasks:
+    - name: Configure Master Node
+      import_role: 
+        name: kubernetes_master_cluster
