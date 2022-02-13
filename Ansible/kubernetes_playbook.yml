@@ -1,14 +1,3 @@
-# ---
-# - import_playbook: kubernetes_master.yml
-# - import_playbook: kubernetes_worker.yml
-
 ---
-- name: Kubernetes HA Cluster
-  become: yes
-  hosts: kube_ha
-  gather_facts: true
-
-  tasks:
-    - name: Configure HA Cluster
-      import_role: 
-        name: kubernetes_ha_cluster
+- import_playbook: kubernetes_master.yml
+- import_playbook: kubernetes_worker.yml
