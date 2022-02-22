@@ -8,5 +8,5 @@ rbac: enable
 storage: enable 
 helm3: enable
 dashboard: enable
-registry: enable
+registry: disable
 node_identifier: master
