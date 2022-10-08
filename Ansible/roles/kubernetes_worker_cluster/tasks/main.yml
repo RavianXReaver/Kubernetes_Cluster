@@ -41,6 +41,15 @@
   set_fact: 
     random_number: "{{ [worker_node_status['results']] | length | random }}"
 
+- name: Add the worker node to /etc/hosts in master node(s)
+  lineinfile: 
+    path: /etc/hosts
+    line: "{{ ansible_host }} {{ ansible_hostname }}" 
+    state: present
+  delegate_to: "{{ item }}"
+  delegate_facts: true
+  loop: "{{ master_nodes }}"
+
 - name: Get the microk8s join command from the master node
   shell: "microk8s add-node | grep -E -m1 'microk8s join {{ hostvars[item].ansible_host }}'"
   delegate_to: "{{ item }}"
@@ -48,7 +57,6 @@
   changed_when: false
   when: (worker_node_status['results'][random_number | int]['stdout'] is not search("Ready")) or (worker_node_status['results'][random_number | int]['stdout'] | length == 0)
   loop: "{{ master_nodes }}"
-
   register: microk8s_join_command
 
 - name: Set the microk8s join command on the worker node

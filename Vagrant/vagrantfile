@@ -1,25 +1,67 @@
 servers=[
   # {
-  #   :hostname => "etcd-node1",
+  #   :hostname => "etcd_node1",
   #   :ip  => "192.168.100.10",
   #   :box => "ubuntu/bionic64",
   #   :ram => 1024,
   #   :cpu => 1
   # },
   # {
-  #   :hostname => "etcd-node2",
+  #   :hostname => "etcd_node2",
   #   :ip  => "192.168.100.11",
   #   :box => "ubuntu/bionic64",
   #   :ram => 1024,
   #   :cpu => 1
   # },
   # {
-  #   :hostname => "etcd-node3",
+  #   :hostname => "etcd_node3",
   #   :ip  => "192.168.100.12",
   #   :box => "ubuntu/bionic64",
   #   :ram => 1024,
   #   :cpu => 1
   # },
+  # {
+  #   :hostname => "kubeMaster1",
+  #   :ip  => "192.168.56.13",
+  #   :box => "ubuntu/bionic64",
+  #   :ram => 2048,
+  #   :cpu => 2
+  # },
+  # {
+  #   :hostname => "kubeMaster2",
+  #   :ip  => "192.168.56.14",
+  #   :box => "ubuntu/bionic64",
+  #   :ram => 2048,
+  #   :cpu => 2
+  # },
+  # {
+  #   :hostname => "kubeMaster3",
+  #   :ip  => "192.168.56.18",
+  #   :box => "ubuntu/bionic64",
+  #   :ram => 2048,
+  #   :cpu => 2
+  # },
+  # {
+  #   :hostname => "kubeWorker1",
+  #   :ip  => "192.168.56.15",
+  #   :box => "ubuntu/bionic64",
+  #   :ram => 4096,
+  #   :cpu => 4
+  # },
+  # {
+  #   :hostname => "kubeWorker2",
+  #   :ip  => "192.168.56.16",
+  #   :box => "ubuntu/bionic64",
+  #   :ram => 6000,
+  #   :cpu => 4
+  # },
+  # {
+  #   :hostname => "kubeWorker3",
+  #   :ip  => "192.168.56.17",
+  #   :box => "ubuntu/bionic64",
+  #   :ram => 1024,
+  #   :cpu => 1
+  # }
   {
     :hostname => "kube-master1",
     :ip  => "192.168.56.13",
@@ -28,39 +70,18 @@ servers=[
     :cpu => 2
   },
   {
-    :hostname => "kube-master2",
-    :ip  => "192.168.56.14",
-    :box => "ubuntu/bionic64",
-    :ram => 2048,
-    :cpu => 2
-  },
-  {
-    :hostname => "kube-master3",
-    :ip  => "192.168.56.18",
-    :box => "ubuntu/bionic64",
-    :ram => 2048,
-    :cpu => 2
-  },
-  {
     :hostname => "kube-worker1",
     :ip  => "192.168.56.15",
     :box => "ubuntu/bionic64",
-    :ram => 1024,
-    :cpu => 1
+    :ram => 4096,
+    :cpu => 4
   },
   {
     :hostname => "kube-worker2",
     :ip  => "192.168.56.16",
     :box => "ubuntu/bionic64",
-    :ram => 1024,
-    :cpu => 1
-  },
-  {
-    :hostname => "kube-worker3",
-    :ip  => "192.168.56.17",
-    :box => "ubuntu/bionic64",
-    :ram => 1024,
-    :cpu => 1
+    :ram => 4096,
+    :cpu => 4
   }
 ]
 

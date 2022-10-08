@@ -20,7 +20,12 @@
   changed_when: false
   register: aliaskubectlout
 
-- name: Run All tasks from Services
+- name: Create helm3 alias
+  command: "snap alias microk8s.helm3 helm"
+  changed_when: false
+  register: aliashelmout
+
+- name: Run all tasks from Services
   include_tasks: services.yml
 
 - name: Get the microk8s join command from the microk8s master

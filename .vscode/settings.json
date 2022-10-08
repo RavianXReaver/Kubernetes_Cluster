@@ -2,5 +2,12 @@
     "discord.removeRemoteRepository": true,
     "discord.removeTimestamp": true,
     "discord.removeDetails": true,
-    "discord.enabled": true
+    "discord.enabled": true,
+    "spellright.language": [
+        "en-US-10-1."
+    ],
+    "spellright.documentTypes": [
+        "markdown",
+        "latex"
+    ]
 }

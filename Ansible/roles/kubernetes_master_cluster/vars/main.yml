@@ -1,12 +1,13 @@
 ---
 # vars file for k8_master_cluster
 
-microk8s_version: 1.23/stable
+microk8s_version: 1.25/stable
 dns_enabled: enable
 metrics_server: enable
 rbac: enable  
 storage: enable 
 helm3: enable
 dashboard: enable
-registry: disable
+registry: enable
+traefik: enable
 node_identifier: master

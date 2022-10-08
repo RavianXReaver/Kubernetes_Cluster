@@ -33,7 +33,7 @@
   - name: Enable Registry
     command: 'microk8s {{ registry }} registry'
     register: Mk8sRegistryOut
-    changed_when: Mk8sRegistryOut.stdout_lines is not search("already enabled")
+    changed_when: Mk8sRegistryOut.stdout_lines is not search("already {{ registry }}")
   
   rescue:
     - name: Start MicroK8s

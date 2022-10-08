@@ -1,5 +1,5 @@
 ---
 # vars file for k8_worker_cluster
 
-microk8s_version: 1.23/stable
+microk8s_version: 1.25/stable
 node_identifier: worker
