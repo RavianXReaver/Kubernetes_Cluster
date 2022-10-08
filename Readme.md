@@ -14,5 +14,6 @@ Then Change the server address in ~/.kube/config
 
 Step 1: Create the kube config file in the master node 
 ``ssh vagrant@[MasterNode_IP_address] microk8s config > ~/.kube/config``
+
 Step 2: Copy the Kube config file to the local server 
 ``scp -r vagrant@[MasterNode_IP_address]:/home/vagrant/.kube/config ~/.kube/config``
